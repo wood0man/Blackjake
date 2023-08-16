@@ -40,13 +40,14 @@ while dealerCardsValue<21 or playerCardsValue<21:
         break;
         
     print("Dealer: What's your move , Kiddo?")
-    
-    if input("My move is...").capitalize()=="Hit":
+    playerMove=input("My move is ...")
+    #the move that the player made
+    if playerMove.capitalize()=="Hit":
         player.hit()
         if playerCardsValue>21 :
             print("Dealer: you've bitten the dust , Kidoo lol")
             break;
-    elif input("My move is...").capitalize()=="Stand":
+    elif playerMove.capitalize()=="Stand":
         player.stand()
     
     
@@ -84,5 +85,7 @@ while dealerCardsValue<21 or playerCardsValue<21:
     print(value)
     dealerCardsValue=value
     if dealerCardsValue>21 :
-        print("I've bitten the dust ,:(")
+        print("I've bitten the dust :(")
         break;
+    playerCardsValue=0;
+    dealerCardsValue=0;
