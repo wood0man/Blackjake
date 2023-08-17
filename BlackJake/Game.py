@@ -1,5 +1,6 @@
-import Deck
-import Player
+import Deck;
+import Player;
+import random
 """
 this game is based around getting to the total of 21 or as close to 21 before the game ends
 you as a player can hit( pull an extra card) or stand( not pull an extra card) and you must place a
@@ -9,74 +10,102 @@ bet at the begining of the round. if you win you get 1.5 times your bet added to
 # class Game():
 #     def __init__(self,player,bank,bet):
 #         player=Player.Player(player, bank,bet);
-deck = Deck.Deck()
-# pop cards so the player won't get any dup cards when he pulls
-poppedPlayerCards = []
-for i in range(0, 2):
+deck=Deck.Deck()
+#pop cards so the player won't get any dup cards when he pulls
+poppedPlayerCards=[];
+for i in range(0,2):
     poppedPlayerCards.append(deck.allCards.pop())
-player = Player.Player("Duaa", poppedPlayerCards, 2000, 100)
+player=Player.Player("Duaa",poppedPlayerCards, 2000,100);
 
-print("Hello. I'm the dealer of this game. Now i'll give you your cards")
-poppedDealerCards = []
-for i in range(0, 2):
+print("Hello. I'm the dealer of this game. Now I'll give you your cards");
+poppedDealerCards=[];
+for i in range(0,2):
     poppedDealerCards.append(deck.allCards.pop())
-dealer = Player.Player("Dealer", deck.allCards[2:4], 2000, 150)
-dealerCardsValue = 0
-playerCardsValue = 0
-
-while dealerCardsValue < 21 or playerCardsValue < 21:
-    print("Your cards are:")
-
+dealer=Player.Player("Dealer", deck.allCards[2:4], 2000, 150);
+dealerCardsValue=0;
+playerCardsValue=0;
+turn=0
+while dealerCardsValue<21 or playerCardsValue<21 or turn<2:
+    print("Your cards are:");
+    
     for i in player.deck:
-        print(i)
+        print(i);
+    for card in player.deck:
+        #to check if there's an ace in the players deck and make the player choose it's value
+        if "Ace" in card.suite:
+            print("You have an ace. do you want it to have 10 or 1 value?")
+            if input("My choice is...")=="10":
+                card.value=10
+            else: card.value=1
+        
     print("The value:")
-
-    for i in player.deck:
-        playerCardsValue += i.value
+   
+    for i  in player.deck:
+        playerCardsValue+= i.value
     print(playerCardsValue)
-
-    if playerCardsValue > 21:
+    
+    if playerCardsValue>21 :
         print("you've bitten the dust , Kidoo lol")
-        break
-
+        break;
+        
     print("Dealer: What's your move , Kiddo?")
-    playerMove = input("My move is ...")
-    # the move that the player made
-    if playerMove.capitalize() == "Hit":
+    playerMove=input("My move is ...")
+    #the move that the player made
+    if playerMove.capitalize()=="Hit":
         player.hit()
-        if playerCardsValue > 21:
+        if playerCardsValue>21 :
             print("Dealer: you've bitten the dust , Kidoo lol")
-            break
-    elif playerMove.capitalize() == "Stand":
+            break;
+    elif playerMove.capitalize()=="Stand":
         player.stand()
-
-    print("Your cards are:")
+    
+    
+    
+    
+    
+    
+    
+    print("Your cards are:");
     for i in player.deck:
-        print(i)
+        print(i);
     print("The value:")
-    value = 0
-    for i in player.deck:
-        value += i.value
+    value=0;
+    for i  in player.deck:
+        value+= i.value
     print(value)
-    playerCardsValue = value
-
-    if playerCardsValue > 21:
+    playerCardsValue=value
+    
+    if playerCardsValue>21 :
         print("you've bitten the dust , Kidoo lol")
-        break
+        break;
+
+
+
 
     dealer.hit()
-    print("Dealer cards are:")
-    dealerCardsValue = 0
+    print("Dealer cards are:");
+    dealerCardsValue=0;
     for i in dealer.deck:
-        print(i)
+        print(i);
+    for card in dealer.deck:
+        #to check if there's an ace in the dealer deck and make the player choose it's value
+        if "Ace" in card.suite:
+            
+            if random.randint(1, 2)==1:
+                card.value=10
+            else:
+                card.value=1
     print("The value:")
-    value = 0
-    for i in dealer.deck:
-        value += i.value
+    value=0;
+    for i  in dealer.deck:
+        value+= i.value
     print(value)
-    dealerCardsValue = value
-    if dealerCardsValue > 21:
+    dealerCardsValue=value
+    if dealerCardsValue>21 :
         print("I've bitten the dust :(")
-        break
-    playerCardsValue = 0
-    dealerCardsValue = 0
+        player.bank+=player.bet*1.5
+        print(f"your bank now is {player.bank}")
+        break;
+    playerCardsValue=0;
+    dealerCardsValue=0;
+    turn +=1
