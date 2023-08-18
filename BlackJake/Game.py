@@ -26,6 +26,11 @@ dealerCardsValue=0;
 playerCardsValue=0;
 turn=0
 while dealerCardsValue<21 or playerCardsValue<21 or turn<2:
+    #this variable is used to print the final message in the case noone got to 21
+    finalCheck=True;
+    
+    
+    
     print("Your cards are:");
     
     for i in player.deck:
@@ -46,20 +51,28 @@ while dealerCardsValue<21 or playerCardsValue<21 or turn<2:
     
     if playerCardsValue>21 :
         print("you've bitten the dust , Kidoo lol")
+        finalCheck=False
         break;
         
     print("Dealer: What's your move , Kiddo?")
-    playerMove=input("My move is ...")
-    #the move that the player made
-    if playerMove.capitalize()=="Hit":
-        player.hit()
-        if playerCardsValue>21 :
-            print("Dealer: you've bitten the dust , Kidoo lol")
-            break;
-    elif playerMove.capitalize()=="Stand":
-        player.stand()
-    
-    
+    correctMove=False;
+    while not correctMove:
+        print("Note you could either hit (Pull a card) or stand (not pull a card)")
+        playerMove=input("My move is ...")
+        #the move that the player made
+        if playerMove.capitalize()=="Hit":
+            player.hit()
+            correctMove=True
+            if playerCardsValue>21 :
+                print("Dealer: you've bitten the dust , Kidoo lol")
+                finalCheck=False
+                break;
+        elif playerMove.capitalize()=="Stand":
+            player.stand()
+            correctMove=True
+        
+        else: 
+            print("That is not a move.")
     
     
     
@@ -77,6 +90,7 @@ while dealerCardsValue<21 or playerCardsValue<21 or turn<2:
     
     if playerCardsValue>21 :
         print("you've bitten the dust , Kidoo lol")
+        finalCheck=False
         break;
 
 
@@ -103,9 +117,15 @@ while dealerCardsValue<21 or playerCardsValue<21 or turn<2:
     dealerCardsValue=value
     if dealerCardsValue>21 :
         print("I've bitten the dust :(")
+        finalCheck=False
         player.bank+=player.bet*1.5
         print(f"your bank now is {player.bank}")
         break;
     playerCardsValue=0;
     dealerCardsValue=0;
     turn +=1
+if finalCheck:
+
+    if dealerCardsValue>playerCardsValue and dealerCardsValue<21:
+        print("You've bitten the dust, kiddo lol")
+    else:print("I've bitten the dust :(")
